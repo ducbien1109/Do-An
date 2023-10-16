@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Controls from "./player/Controls";
 import Seekbar from "./player/Seekbar";
 import Track from "./player/Track";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Player from "./player/Player";
 import VolumeBar from "./player/VolumeBar";
 import {
@@ -20,6 +20,15 @@ export default function Footer() {
   const [volume, setVolume] = useState(0.6);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (isPlaying) {
+      if (!tracks[trackIndex]?.preview_url) {
+        setTimeout(() => {
+          handleNextSong();
+        }, 1000);
+      }
+    }
+  }, [trackIndex, tracks, isPlaying]);
   const handlePlayPause = () => {
     if (isPlaying) {
       dispatch(isPlayingAction(false));

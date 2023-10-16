@@ -28,7 +28,6 @@ export default function SearchPage() {
     } else {
       search(token, params.searchQuery).then(
         ({ playlists, artists, tracks }) => {
-          console.log(playlists, artists, tracks);
           setArtists(artists?.items);
           setPlaylists(playlists?.items);
           dispatch(tracksAction(tracks?.items));
@@ -36,6 +35,7 @@ export default function SearchPage() {
         }
       );
       dispatch(isPlayingAction(false));
+      dispatch(isActiveAction(false));
     }
   }, [token, params, dispatch, isLogin]);
   const handlePlay = (index) => {

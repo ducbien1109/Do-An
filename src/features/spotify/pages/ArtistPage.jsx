@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  isActiveAction,
   isLoadingAction,
   isPlayingAction,
   tracksAction,
@@ -37,8 +38,8 @@ export default function ArtistPage() {
     } else {
       getArtistTopTrackApi();
       dispatch(isPlayingAction(false));
+      dispatch(isActiveAction(false));
       const current = artists.find((artist) => artist.id === params.artistId);
-
       setCurrentArtist({
         name: current.name,
         type: current.type,

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import getPlaylistById from "../Api/getPlaylistById";
 import {
+  isActiveAction,
   isLoadingAction,
   isPlayingAction,
   playlistSelectedAction,
@@ -48,6 +49,7 @@ export default function PlaylistPage() {
     } else {
       getPlaylistApi();
       dispatch(isPlayingAction(false));
+      dispatch(isActiveAction(false));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
