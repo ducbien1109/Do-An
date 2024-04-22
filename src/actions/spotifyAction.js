@@ -18,6 +18,7 @@ export const playlistSelectedAction = (playlistSelected) => {
   };
 };
 
+
 export const tracksAction = (tracks) => {
   return { type: "SET_TRACKS", payload: tracks };
 };
@@ -51,3 +52,7 @@ export const isShowSearch = (isShow) => {
     payload: isShow,
   };
 };
+export const toggleLikedSongAction = (song) => ({
+  type: "TOGGLE_LIKED_SONG",
+  payload: song,
+});

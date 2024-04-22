@@ -18,15 +18,24 @@ export default function LogOut() {
     dispatch(isActiveAction(false));
     dispatch(isPlayingAction(false));
     dispatch(tracksAction([]));
-    navigate("/login");
+    navigate("/logins");
   };
+  const handleLogin = ()=>{
+    navigate("/logins")
+  }
   return (
-    <button
+    <div className="admin">
+      <button onClick={handleLogin}>Login</button>
+      <button
       onClick={handleLogout}
       className="bg-black p-2 rounded-xl gap-2 flex items-center"
     >
       <CiUser />
       <p>Logout</p>
     </button>
+    {/* <p className="admin-p" onClick={()=>navigate('/admin')}>
+      Admin
+    </p> */}
+    </div>
   );
 }

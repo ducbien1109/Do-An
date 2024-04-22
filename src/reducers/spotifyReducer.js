@@ -8,7 +8,9 @@ const initState = {
   isLoading: true,
   isActive: false,
   isShowSearch: false,
+  likedSongs: [], // Thêm trường likedSongs vào initState
 };
+
 export default function spotifyReducer(state = initState, action) {
   switch (action.type) {
     case "SET_PLAYLISTS":
@@ -37,6 +39,27 @@ export default function spotifyReducer(state = initState, action) {
 
     case "SET_SHOW_SEARCH":
       return { ...state, isShowSearch: action.payload };
+
+    case "TOGGLE_LIKED_SONG":
+      const { song } = action.payload;
+      const songIndex = state.likedSongs.findIndex(
+        (likedSong) => likedSong.songName === song.songName
+      );
+      if (songIndex !== -1) {
+        // Xóa bài hát nếu đã tồn tại trong danh sách
+        return {
+          ...state,
+          likedSongs: state.likedSongs.filter(
+            (likedSong) => likedSong.songName !== song.songName
+          ),
+        };
+      } else {
+        // Thêm bài hát vào danh sách nếu chưa tồn tại
+        return {
+          ...state,
+          likedSongs: [...state.likedSongs, song],
+        };
+      }
 
     default:
       return state;

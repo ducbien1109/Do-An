@@ -5,10 +5,8 @@ import Track from "./player/Track";
 import { useEffect, useState } from "react";
 import Player from "./player/Player";
 import VolumeBar from "./player/VolumeBar";
-import {
-  isPlayingAction,
-  trackIndexAction,
-} from "../../../../actions/spotifyAction";
+import { isPlayingAction, trackIndexAction } from "../../../../actions/spotifyAction";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 export default function Footer() {
   const { tracks, trackIndex, isPlaying, isActive } = useSelector(
@@ -29,40 +27,40 @@ export default function Footer() {
       }
     }
   }, [trackIndex, tracks, isPlaying]);
+
   const handlePlayPause = () => {
-    if (isPlaying) {
-      dispatch(isPlayingAction(false));
-    } else {
-      dispatch(isPlayingAction(true));
-    }
+    dispatch(isPlayingAction(!isPlaying));
   };
 
   const handleNextSong = () => {
-    if (trackIndex === tracks.length - 1) {
-      dispatch(trackIndexAction(0));
-    } else {
-      dispatch(trackIndexAction(trackIndex + 1));
-    }
+    const nextTrackIndex = (trackIndex + 1) % tracks.length;
+    dispatch(trackIndexAction(nextTrackIndex));
     dispatch(isPlayingAction(true));
   };
 
   const handlePrevSong = () => {
-    if (trackIndex === 0) {
-      dispatch(trackIndexAction(tracks.length - 1));
-    } else {
-      dispatch(trackIndexAction(trackIndex - 1));
-    }
+    const prevTrackIndex = trackIndex === 0 ? tracks.length - 1 : trackIndex - 1;
+    dispatch(trackIndexAction(prevTrackIndex));
     dispatch(isPlayingAction(true));
   };
 
+  const [liked, setLiked] = useState(false);
+
+  const handleLike = () => {
+    setLiked(!liked);
+  };
+
   return (
-    <div className=" relative p-2 flex items-center justify-between flex-wrap min-h-max">
+    <div className="relative p-2 flex items-center justify-between flex-wrap min-h-max">
       <Track
         isPlaying={isPlaying}
         activeSong={tracks[trackIndex]}
+        liked={liked}
+        handleLike={handleLike}
         isActive={isActive}
+        
       />
-      <div className="flex-1 flex flex-col items-center justify-center">
+      <div className="flex-1 flex flex-col items-center justify-center" id="test">
         <Controls
           isPlaying={isPlaying}
           isActive={isActive}
